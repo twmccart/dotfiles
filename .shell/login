@@ -1,0 +1,33 @@
+# Put your environment variables here
+
+# Preferred programs
+export EDITOR=nano
+
+# Path settings
+pathprepend ~/.local/bin PATH
+pathprepend ~/bin PATH
+
+# Settings for SRAssembler
+# This is so that openmpi functions properly
+pathappend /usr/lib64/openmpi/bin PATH
+# These are so GenomeThreader can be used by SRAssembler
+pathappend /usr/local/src/CGS-DIR/GTH/gth/bin PATH
+export BSSMDIR="/usr/local/src/CGS-DIR/GTH/gth/bin/bssm"
+export GTHDATADIR="/usr/local/src/CGS-DIR/GTH/gth/bin/gthdata"
+# This is so the SNAP gene prediction program can be used by SRAssembler
+export ZOE=/usr/local/src/CGS-DIR/SNAP/snap
+#pathappend usr/local/lib LD_LIBRARY_PATH
+
+# The current directory should never be in $PATH
+pathremove . PATH
+pathremove "" PATH
+
+# Language
+export LANG='en_US.UTF-8'
+#export LC_ALL=$LANG
+#export LC_COLLATE=$LANG
+#export LC_CTYPE=$LANG
+#export LC_MESSAGES=$LANG
+#export LC_MONETARY=$LANG
+#export LC_NUMERIC=$LANG
+#export LC_TIME=$LANG

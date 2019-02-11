@@ -1,0 +1,15 @@
+[user]
+	name = Thomas Wayne McCarthy
+	email = 10548984+twmccart@users.noreply.github.com
+[push]
+	default = simple
+[core]
+	excludesfile = /home/twmccart/.gitignore_global
+[color]
+	diff = auto
+	status = auto
+	branch = auto
+	interactive = auto
+	ui = true
+	pager = true
+	

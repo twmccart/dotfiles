@@ -1,0 +1,8 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=FigTree
+Exec=/usr/local/bin/figtree %F
+Icon=/usr/local/src/FigTree_v1.4.2/images/figtree.png
+Terminal=false
+MimeType=text/plain

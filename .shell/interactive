@@ -1,0 +1,79 @@
+## More useful prompt
+ssource ~/.shell/prompt
+
+## User specific aliases and functions
+# Make some possibly destructive commands more interactive.
+# Some of these aren't POSIX-compliant and irritate OS X.
+alias rm='rm -I'
+alias mv='mv -i'
+alias cp='cp -i'
+alias rsync='rsync --times'
+
+# color aliases
+alias ls='ls --color=auto'
+alias grep='grep --color=auto'
+
+# Convenience aliases
+alias ..='cd ..'
+alias ...='cd ../..'
+alias lt='ls -ltr'
+alias ll='ls -l'
+alias big='du -h --max-depth=1 | sort -h'
+alias xclip='xclip -selection clipboard'
+alias clip='xclip -selection c -in'
+alias clop='xclip -selection c -out'
+clipname() {
+	local file=$1
+	#realpath -s $file | xclip -selection clipboard -in -filter
+	readlink -z -f $file | xclip -selection clipboard -in -filter
+	printf "\n"
+}
+
+# Use any local aliases
+ssource ~/.bash_aliases
+
+## Log that total shell history.
+# Based on https://www.jefftk.com/p/you-should-be-logging-shell-history
+promptFunc() {
+# Right before prompting for the next command, save the previous command in a file.
+	local exit_status="$?"
+	echo "$(date +%Y-%m-%d--%H-%M-%S) $(tty) $PWD	$(history 1)	$exit_status" >> ~/.full_history
+}
+PROMPT_COMMAND=promptFunc
+histgrep() {
+	cat ~/.full_history | grep --color=always "$@"
+}
+clean_full_history() {
+	cp ~/.full_history ~/.full_history.backup &&
+	< ~/.full_history.backup grep -v -E -e '  cd ' -e '  cd\.*$' -e '  ls$' -e '  \.\.\.?$' -e '  scratch$' -e '  pwd$' > ~/.full_history &&
+	rm ~/.full_history.backup
+}
+
+## If logging in remotely, try to start tmux
+autotmux() {
+	if pstree -p | grep -E --quiet ".*sshd.*\($$\)"; then
+		if command -v tmux > /dev/null; then
+			[[ ! $TERM =~ screen ]] && [ -z $TMUX ] && { tmux attach || tmux new-session;}
+		fi
+	fi
+
+	# Tmux is nice, but it still struggles with SSH Agent forwarding
+	# I'm not totally sure that this works without also messing with tmux settings
+	refresh() {
+		eval $(tmux showenv -s DISPLAY)
+		eval $(tmux showenv -s SSH_AUTH_SOCK)
+	}
+}
+autotmux
+
+stderred() {
+	if [ -e ~/.local/src/stderred/build/libstderred.so ]; then
+		# This is so that stderred works.
+		export LD_PRELOAD="${HOME}/.local/src/stderred/build/libstderred.so${LD_PRELOAD:+:$LD_PRELOAD}"
+		# Make the stderr fuchsia, not red.
+		export STDERRED_ESC_CODE=$(echo -e "\e[38;5;200m")
+		# Prevent weirdness when starting tmux.
+		export STDERRED_BLACKLIST='^(-bash)$'
+	fi
+}
+stderred
