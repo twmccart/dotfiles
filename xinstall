@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+#for file in {bash,shell}; do
+	#path=$(realpath ${file})
+	#pushd ~
+		#ln -s -T ${path} .${file}
+	#popd
+#done
+
+#for file in {bashrc,bash_profile,bash_aliases,gitconfig,inputrc,nanorc,tmux.conf}; do
+	#if [ -e ~/.${file} ]; then
+		#mv --no-clobber ~/.${file} ~/.${file}.backup
+	#fi
+	#path=$(realpath ${file})
+	#pushd ~
+		#ln -s -T ${path} .${file}
+	#popd
+#done
+
+mkdir -p ~/.local/bin ~/.local/share
+for file in {config/geany,local/bin/geanyer,local/share/applications}; do
+	if [ -e ~/.${file} ]; then
+		mv --no-clobber ~/.${file} ~/.${file}.backup
+		rm -f ~/.${file}
+	fi
+	path=$(realpath ${file})
+	pushd ~
+		ln -s -T ${path} .${file}
+	popd
+done
