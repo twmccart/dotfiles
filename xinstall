@@ -12,7 +12,7 @@ for file in {bash,shell}; do
 	popd
 done
 
-for file in {bashrc,bash_profile,bash_aliases,gitconfig,inputrc,nanorc,tmux.conf}; do
+for file in {bashrc,bash_profile,gitconfig,inputrc,nanorc,tmux.conf}; do
 	if [ -e ~/.${file} ]; then
 		mv --no-clobber ~/.${file} ~/.${file}.backup
 	fi
