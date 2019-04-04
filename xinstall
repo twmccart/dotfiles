@@ -1,38 +1,94 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-for file in {bash,shell}; do
-	if [ -e ~/.${file} ]; then
-		mv --no-clobber ~/.${file} ~/.${file}.backup
+## Put the main dotfiles in the home directory.
+setup_main_dotfiles() {
+	# First set up the directories that the bash dotfiles point into.
+	for file in {bash,shell}; do
+		# If the file is already there, try to back it up.
+		if [ -e ~/.${file} ]; then
+			mv -i ~/.${file} ~/.${file}.backup
+		fi
+		# If a backup or dead symlink already exists, remove the original.
+		rm -f ~/.${file} 
+		# Make a symlink to the file in this git repository.
+		path=$(realpath ${file})
+		pushd ~
+			ln -s -T ${path} .${file}
+		popd
+	done
+	# Now place all the high-level dotfiles.
+	for file in {bashrc,bash_profile,gitconfig,inputrc,nanorc,tmux.conf}; do
+		# If the file is already there, try to back it up.
+		if [ -e ~/.${file} ]; then
+			mv --no-clobber ~/.${file} ~/.${file}.backup
+		fi
+		# If a backup or dead symlink already exists, remove the original.
+		rm -f ~/.${file} 
+		path=$(realpath ${file})
+		pushd ~
+			ln -s -T ${path} .${file}
+		popd
+	done
+}
+setup_main_dotfiles
+
+# Set up custom desktop applications.
+setup_desktop_applications() {
+	for file in {local/share/applications,}; do
+		if [ -e ~/.${file} ]; then
+			mv -i ~/.${file} ~/.${file}.backup
+		fi
+		# Remove any dead symlink or non-clobbering file that might be there.
 		rm -f ~/.${file}
-	fi
-	path=$(realpath ${file})
-	pushd ~
-		ln -s -T ${path} .${file}
-	popd
-done
+		path=$(realpath ${file})
+		pushd ~
+			ln -s -T ${path} .${file}
+		popd
+		# Make sure any pre-existing custom applications get kept, unless this was already a symlinked directory.
+		if [ -e ~/.${file}.backup -a ! -L ~/.${file}.backup ]; then
+			for item in ~/.${file}.backup/*; do
+				cp --no-clobber ${item} ~/.${file}/
+			done
+		fi
+	done
+}
+setup_desktop_applications
 
-for file in {bashrc,bash_profile,gitconfig,inputrc,nanorc,tmux.conf}; do
-	if [ -e ~/.${file} ]; then
-		mv --no-clobber ~/.${file} ~/.${file}.backup
+## Set up other config files.
+# Set up geany configs.
+setup_geany_configs() {
+	if command -v geany >/dev/null; then
+		mkdir -p ~/.local/bin ~/.local/share
+		for file in {config/geany,local/bin/geanyer}; do
+			if [ -e ~/.${file} ]; then
+				mv --no-clobber ~/.${file} ~/.${file}.backup
+			fi
+			# Remove any dead symlink or non-clobbering file that might be there.
+			rm -f ~/.${file}
+			path=$(realpath ${file})
+			pushd ~
+				ln -s -T ${path} .${file}
+			popd
+		done
 	fi
-	# Remove any dead symlink or non-clobbering file that might be there.
-	rm -f ~/.${file}
-	path=$(realpath ${file})
-	pushd ~
-		ln -s -T ${path} .${file}
-	popd
-done
+}
+setup_geany_configs
 
-mkdir -p ~/.local/bin ~/.local/share
-for file in {config/geany,local/bin/geanyer,local/share/applications}; do
-	if [ -e ~/.${file} ]; then
-		mv --no-clobber ~/.${file} ~/.${file}.backup
+# Set up rstudio configs.
+setup_rstudio_configs() {
+	if command -v rstudio >/dev/null; then
+		for file in {rstudio-desktop/monitored/user-settings/user-settings,}; do
+			if [ -e ~/.${file} ]; then
+				mv --no-clobber ~/.${file} ~/.${file}.backup
+			fi
+			# Remove any dead symlink or non-clobbering file that might be there.
+			rm -f ~/.${file}
+			path=$(realpath ${file})
+			pushd ~
+				ln -s -T ${path} .${file}
+			popd
+		done
 	fi
-	# Remove any dead symlink or non-clobbering file that might be there.
-	rm -f ~/.${file}
-	path=$(realpath ${file})
-	pushd ~
-		ln -s -T ${path} .${file}
-	popd
-done
+}
+setup_rstudio_configs
