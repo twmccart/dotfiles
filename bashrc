@@ -1,3 +1,4 @@
+# .bashrc
 # this file gets run in two cases:
 # 1. non-login interactive shell
 # 2. remote shell (over ssh or similar)
@@ -6,6 +7,12 @@
 # in this case, /etc/bash.bashrc has not been previous executed (unlike #1).
 # however, we assume that #2 is a recovery mode, so we don't want to do much.
 # (also, my google-fu didn't find a way to distinguish them)
+
+
+# First source any global definitions
+if [ -f /etc/bashrc ]; then
+	. /etc/bashrc
+fi
 
 . ~/.bash/env
 . ~/.bash/interactive
