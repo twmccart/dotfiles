@@ -39,6 +39,13 @@ find_git_branch() {
 	fi
 	echo -n "$git_branch"
 }
+seecolors() {
+	local color=0;
+	while [ $color -lt 256 ]; do
+		echo -e "$color: \\033[38;5;${color}mhello\\033[48;5;${color}mworld\\033[0m";
+		((color++));
+	done
+}
 color_my_prompt() {
     # Here are some colors we want, complete with \[ \] to avoid messing up character count in the prompt
     local red="\[\e[31m\]" #Red characters
