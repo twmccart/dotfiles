@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 ## Make the terminal prompt pretty and informative
 # Original default prompt is PS1='[\u@\h \W]\$ '
 # Set terminal title bar to display device:workingdirectory, set red brackets.
@@ -39,6 +40,13 @@ find_git_branch() {
 	fi
 	echo -n "$git_branch"
 }
+seecolors() {
+	local color=0;
+	while [ $color -lt 256 ]; do
+		echo -e "$color: \\033[38;5;${color}mhello\\033[48;5;${color}mworld\\033[0m";
+		((color++));
+	done
+}
 color_my_prompt() {
     # Here are some colors we want, complete with \[ \] to avoid messing up character count in the prompt
     local red="\[\e[31m\]" #Red characters
@@ -78,4 +86,5 @@ color_my_prompt() {
     PS1="\[\e]0;${location}:\w\a\]${bracketcolor}[${resetcolor}${beginningcolor}${beginning} \[\$(git_color)\]\$(find_git_branch)${resetcolor}\W${bracketcolor}]${resetcolor}\\$ "
 }
 
-if [[ "$TERM" =~ 256color ]]; then color_my_prompt; fi
+#if [[ "$TERM" =~ 256color ]]; then color_my_prompt; fi
+color_my_prompt
