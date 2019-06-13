@@ -83,7 +83,7 @@ setup_geany_configs
 setup_rstudio_configs() {
 	if command -v rstudio >/dev/null; then
 		echo "Setting up RStudio config."
-		for file in {rstudio-desktop/monitored/user-settings/user-settings,}; do
+		for file in {rstudio-desktop/monitored/user-settings/user-settings,R/rstudio/*}; do
 			if [ -e ~/.${file} ]; then
 				mv --no-clobber ~/.${file} ~/.${file}.backup
 			fi
