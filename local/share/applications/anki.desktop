@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Anki
+Comment=Spaced Repetition Software for memorization
+Exec=anki
+Icon=anki
+Terminal=false
+Categories=Education
