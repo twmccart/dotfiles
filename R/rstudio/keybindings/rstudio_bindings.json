@@ -1,3 +1,8 @@
 {
-    "commentUncomment" : "Alt+3"
+    "commentUncomment" : "Alt+3",
+    "pasteLastYank" : "Ctrl+U",
+    "reformatCode" : "Ctrl+Shift+A",
+    "removeLine" : "",
+    "yankAfterCursor" : "Ctrl+K",
+    "yankBeforeCursor" : ""
 }

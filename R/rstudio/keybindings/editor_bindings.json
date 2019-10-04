@@ -1,2 +1,10 @@
 {
+    "overwrite" : "",
+    "redo" : "Shift+Cmd+Z|Ctrl+Y",
+    "removeline" : "Alt+K",
+    "removetolineend" : "Ctrl+Shift+K",
+    "selectall" : "",
+    "tolowercase" : "",
+    "touppercase" : "",
+    "undo" : "Ctrl+Z"
 }
