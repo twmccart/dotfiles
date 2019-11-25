@@ -26,11 +26,17 @@ alias big='du -h --max-depth=1 | sort -h'
 alias xclip='xclip -selection clipboard'
 alias clip='xclip -selection c -in'
 alias clop='xclip -selection c -out'
-clipname() {
+function clipname() {
 	local file=$1
 	#realpath -s $file | xclip -selection clipboard -in -filter
 	readlink -z -f $file | xclip -selection clipboard -in -filter
 	printf "\n"
+}
+function commalist() {
+	# Take the contents of the clipboard.
+	# Substitute form-feed for newline so that sed can operate on the whole text.
+	# Replace the form-feeds with a comma and space.
+	xclip -selection c -out | sed -r 's/(.*)/\"\1\"/g' | tr '\n' '\f' | sed 's/\f/, /g' | sed 's/, $//'
 }
 
 # Use any local aliases
