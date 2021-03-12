@@ -13,3 +13,5 @@
 	ui = true
 	pager = true
 	
+[credential]
+	helper = cache

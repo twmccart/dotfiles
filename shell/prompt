@@ -86,5 +86,6 @@ color_my_prompt() {
     PS1="\[\e]0;${location}:\w\a\]${bracketcolor}[${resetcolor}${beginningcolor}${beginning} \[\$(git_color)\]\$(find_git_branch)${resetcolor}\W${bracketcolor}]${resetcolor}\\$ "
 }
 
-#if [[ "$TERM" =~ 256color ]]; then color_my_prompt; fi
-color_my_prompt
+# mate-terminal currently accidentally sets itself as not having 256 colors.
+export TERM=xterm-256color
+if [[ "$TERM" =~ 256color ]]; then color_my_prompt; fi
