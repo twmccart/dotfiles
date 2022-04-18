@@ -1,1 +1,21 @@
-. ~/.shell/interactive
+ssource ~/.shell/interactive
+
+## Confirm that this is genuinely interactive.
+# Rsync executes bashrc even though it's not actually looking for a prompt.
+#[ -z "$PS1" ] && return
+
+## More useful prompt
+ssource ~/.zsh/prompt
+
+## Set zsh special functions
+# from https://superuser.com/a/946143
+set-window-title() {
+  # /Users/clessg/projects/dotfiles -> ~/p/dotfiles
+  #window_title="\e]0;${${PWD/#"$HOME"/~}/projects/p}\a"
+  # Use zsh PROMPT expansion to display hostname and directory.
+  window_title="\e]0;%m:%~\a"
+  print -nP "$window_title"
+}
+
+# Make an array of functions to be run before each command prompt.
+precmd_functions=(set-window-title)

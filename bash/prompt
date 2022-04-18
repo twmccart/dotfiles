@@ -1,0 +1,90 @@
+#!/usr/bin/env bash
+## Make the terminal prompt pretty and informative
+# Original default prompt is PS1='[\u@\h \W]\$ '
+# Set terminal title bar to display device:workingdirectory, set red brackets.
+# \033 is ANSI ESC code, \007 is BEL.
+if [[ "$TERM" =~ "xterm" ]]; then
+	PS1='\[\033]0;\h:\w\007\]\[\033[31;1m\][\[\033[0m\]\u@\h \W\[\033[31;1m\]]\[\033[0m\]\$ '
+fi
+
+# http://unix.stackexchange.com/a/124409/189745
+git_color() {
+	# This produces an ANSI(?) color code based on the git status of the working
+	# directory. The color codes are not \[ \] escaped.
+	local git_status
+	git_status="$(git status 2> /dev/null)"
+	if [[ "$git_status" =~ "Changes not staged for commit" ]]; then
+		printf "\e[38;5;200m" #fuchsia foreground
+	elif [[ "$git_status" =~ "Changes to be committed" ]]; then
+		printf "\e[38;5;220m" #yellow foreground
+	elif [[ "$git_status" =~ "Your branch is ahead of" ]]; then
+		printf "\e[38;5;220m" #yellow foreground
+	elif [[ "$git_status" =~ "nothing to commit" ]]; then
+		printf "\e[38;5;002m" #green foreground
+	elif [[ -z "$git_status" ]]; then
+		printf "\e[0m" #reset color
+	else
+		printf "\e[38;5;200m" #fuchsia foreground
+	fi
+}
+find_git_branch() {
+	# Based on: http://stackoverflow.com/a/13003854/170413
+	local branch
+	if branch=$(git rev-parse --abbrev-ref HEAD 2> /dev/null); then
+		if [[ "$branch" == "HEAD" ]]; then
+		branch='detached*'
+		fi
+	git_branch="($branch) "
+	else
+		git_branch=""
+	fi
+	echo -n "$git_branch"
+}
+seecolors() {
+	local color=0;
+	while [ $color -lt 256 ]; do
+		echo -e "$color: \\033[38;5;${color}mhello\\033[48;5;${color}mworld\\033[0m";
+		((color++));
+	done
+}
+color_my_prompt() {
+    # Here are some colors we want, complete with \[ \] to avoid messing up character count in the prompt
+    local red="\[\e[31m\]" #Red characters
+    local bigred="\[\e[31;1m\]" #Bold red characters
+    local redfore="\[\e[38;5;009m\]"  #bright red foreground
+    local magentafore="\[\e[38;5;013m\]"
+    local cyanfore="\[\e[38;5;014m\]" # bright cyan foreground
+    local resetcolor="\[\e[0m\]"
+    # Here are some defaults for variables
+    local bracketcolor=$red
+    local beginning="\u@\h"
+    local beginningcolor=$cyanfore
+    local location="\h"
+    # If the user is twmccart, we don't need the username in the prompt
+    if [[ $USER == "twmccart" ]]; then
+        local beginning="@\h"
+        # If the terminal is local, show time instead of host
+        if [[ -z "$SSH_TTY" || "$VNCDESKTOP" =~ "$HOSTNAME" ]]; then
+            local beginning="\t"
+            local beginningcolor=$magentafore
+        fi
+    fi
+    # The hostname is less than helpful on the IU HPC resources
+    if [[ "$HOME" =~ "Mason" ]]; then
+        local location="Mason"
+        local beginning="${beginning}-${location}"
+    elif [[ "$HOME" =~ "Karst" ]]; then
+        local location="Karst"
+        local beginning="${beginning}-${location}"
+    elif [[ "$HOME" =~ "Carbonate" ]]; then
+        local location="Carbonate"
+        local beginning="${beginning}-${location}"
+    fi
+# Terminal title bar displays Host:workingdirectorypath
+# Prompt has working directory colored by git status
+# \e is ESC code, \a is BEL code, this may not be POSIX-compliant
+    PS1="\[\e]0;${location}:\w\a\]${bracketcolor}[${resetcolor}${beginningcolor}${beginning} \[\$(git_color)\]\$(find_git_branch)${resetcolor}\W${bracketcolor}]${resetcolor}\\$ "
+}
+
+#if [[ "$TERM" =~ 256color ]]; then color_my_prompt; fi
+color_my_prompt

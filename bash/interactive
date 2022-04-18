@@ -1,1 +1,8 @@
 . ~/.shell/interactive
+
+## Confirm that this is genuinely interactive.
+# Rsync executes bashrc even though it's not actually looking for a prompt.
+[ -z "$PS1" ] && return
+
+## More useful prompt
+ssource ~/.bash/prompt

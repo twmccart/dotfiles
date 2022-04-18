@@ -3,7 +3,7 @@
 [ -z "$PS1" ] && return
 
 ## More useful prompt
-ssource ~/.shell/prompt
+#ssource ~/.shell/prompt
 
 ## User specific aliases and functions
 # Make some possibly destructive commands more interactive.
