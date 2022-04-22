@@ -8,6 +8,7 @@ ssource ~/.shell/interactive
 ssource ~/.zsh/prompt
 
 ## Set zsh special functions
+
 # from https://superuser.com/a/946143
 set-window-title() {
   # /Users/clessg/projects/dotfiles -> ~/p/dotfiles
@@ -17,5 +18,23 @@ set-window-title() {
   print -nP "$window_title"
 }
 
+## Log that total shell history.
+# Based on https://www.jefftk.com/p/you-should-be-logging-shell-history
+promptFunc() {
+# Right before prompting for the next command, save the previous command in a file.
+    local exit_status="$?"
+    echo "$(date +%Y-%m-%d--%H-%M-%S) $(tty)-zsh $PWD   $(history -L -D -1 | cut -w -f 3-)    $exit_status" >> ~/.full_history
+}
+
 # Make an array of functions to be run before each command prompt.
-precmd_functions=(set-window-title)
+precmd_functions=(set-window-title promptFunc)
+
+histgrep() {
+    cat ~/.full_history | grep --color=always "$@"
+}
+clean_full_history() {
+    cp ~/.full_history ~/.full_history.backup &&
+    < ~/.full_history.backup grep -v -E -e '  cd ' -e '  cd\.*$' -e '  ls$' -e '  \.\.\.?$' -e '  scratch$' -e '  pwd$' > ~/.full_history &&
+    rm ~/.full_history.backup
+}
+
