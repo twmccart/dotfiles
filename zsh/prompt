@@ -6,6 +6,9 @@
 if [[ "$TERM" =~ "xterm" ]]; then
 	PS1='%F{red}[%f%n@%m %~%F{red}]%f%# '
 fi
+if [[ "$TERM" =~ "256color" ]]; then
+	PS1='%F{red}[%f%n@%m %~%F{red}]%f%# '
+fi
 
 # http://unix.stackexchange.com/a/124409/189745
 git_color() {

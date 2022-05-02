@@ -74,16 +74,19 @@ autotmux() {
 		eval $(tmux showenv -s SSH_AUTH_SOCK)
 	}
 }
-autotmux
+#autotmux
 
 stderred() {
+	# For Linux.
 	if [ -e ~/.local/src/stderred/build/libstderred.so ]; then
 		# This is so that stderred works.
 		export LD_PRELOAD="${HOME}/.local/src/stderred/build/libstderred.so${LD_PRELOAD:+:$LD_PRELOAD}"
 		# Make the stderr fuchsia, not red.
 		export STDERRED_ESC_CODE=$(echo -e "\e[38;5;200m")
+		# https://githubmemory.com/repo/sickill/stderred/issues/52
 		# Prevent weirdness when starting tmux.
-		export STDERRED_BLACKLIST='^(-bash)$'
+		#export STDERRED_BLACKLIST='^(-bash)$'
+		export STDERRED_BLACKLIST='^(-%s)$'
 	fi
 }
 stderred

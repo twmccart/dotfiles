@@ -5,6 +5,7 @@ ssource ~/.shell/interactive
 #[ -z "$PS1" ] && return
 
 ## More useful prompt
+force_color_prompt=yes
 ssource ~/.zsh/prompt
 
 ## Set zsh special functions
