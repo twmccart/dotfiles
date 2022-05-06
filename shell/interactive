@@ -42,23 +42,6 @@ function commalist() {
 # Use any local aliases
 ssource ~/.bash_aliases
 
-## Log that total shell history.
-# Based on https://www.jefftk.com/p/you-should-be-logging-shell-history
-promptFunc() {
-# Right before prompting for the next command, save the previous command in a file.
-	local exit_status="$?"
-	echo "$(date +%Y-%m-%d--%H-%M-%S) $(tty) $PWD	$(history 1)	$exit_status" >> ~/.full_history
-}
-PROMPT_COMMAND=promptFunc
-histgrep() {
-	cat ~/.full_history | grep --color=always "$@"
-}
-clean_full_history() {
-	cp ~/.full_history ~/.full_history.backup &&
-	< ~/.full_history.backup grep -v -E -e '  cd ' -e '  cd\.*$' -e '  ls$' -e '  \.\.\.?$' -e '  scratch$' -e '  pwd$' > ~/.full_history &&
-	rm ~/.full_history.backup
-}
-
 ## If logging in remotely, try to start tmux
 autotmux() {
 	if pstree -p | grep -E --quiet ".*sshd.*\($$\)"; then

@@ -9,7 +9,7 @@ ssource ~/.shell/interactive
 promptFunc() {
 # Right before prompting for the next command, save the previous command in a file.
     local exit_status="$?"
-    echo "$(date +%Y-%m-%d--%H-%M-%S) $(tty) $PWD   $(history 1)    $exit_status" >> ~/.full_history
+    echo "$(date +%Y-%m-%d--%H-%M-%S) $(tty)-bash $PWD	$(history 1)	$exit_status" >> ~/.full_history
 }
 PROMPT_COMMAND=promptFunc
 histgrep() {
