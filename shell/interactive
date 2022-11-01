@@ -58,6 +58,12 @@ autotmux() {
 	}
 }
 #autotmux
+# Tmux is nice, but it still struggles with SSH Agent forwarding
+# I'm not totally sure that this works without also messing with tmux settings
+refresh() {
+	eval $(tmux showenv -s DISPLAY)
+	eval $(tmux showenv -s SSH_AUTH_SOCK)
+}
 
 stderred() {
 	# For Linux.
