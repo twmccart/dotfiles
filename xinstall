@@ -23,13 +23,13 @@ setup_main_dotfiles() {
 	for file in {bashrc,bash_profile,gitconfig,inputrc,nanorc,tmux.conf,zshrc,zshenv,zlogin,zlogout}; do
 		# If the file is already there, try to back it up.
 		if [ -e ~/.${file} ]; then
-			gmv --no-clobber ~/.${file} ~/.${file}.backup
+			mv --no-clobber ~/.${file} ~/.${file}.backup
 		fi
 		# If a backup or dead symlink already exists, remove the original.
 		rm -f ~/.${file} 
 		path=$(realpath ${file})
 		pushd ~
-			gln -s -T ${path} .${file}
+			ln -s -T ${path} .${file}
 		popd
 	done
 }
