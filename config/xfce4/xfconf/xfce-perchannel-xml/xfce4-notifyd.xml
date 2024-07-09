@@ -9,6 +9,7 @@
     <property name="known_applications" type="array">
       <value type="string" value="/snap/firefox/2356"/>
       <value type="string" value="blueman"/>
+      <value type="string" value="discord"/>
       <value type="string" value="Firefox"/>
       <value type="string" value="firefox_Firefox"/>
       <value type="string" value="nm-applet"/>

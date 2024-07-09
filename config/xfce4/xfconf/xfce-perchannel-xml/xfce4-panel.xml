@@ -55,7 +55,7 @@
       <property name="enable-mpris" type="bool" value="true"/>
       <property name="enable-wnck" type="bool" value="true"/>
       <property name="mixer-command" type="string" value="pavucontrol"/>
-      <property name="mpris-players" type="string" value="chromium.instance14654;chromium.instance1876;chromium.instance4342;chromium.instance4557;firefox.instance1139;firefox.instance1158;firefox.instance1159;firefox.instance1163;firefox.instance1167;firefox.instance1171;firefox.instance1195;firefox.instance1220;firefox.instance1226;firefox.instance12281;firefox.instance12346;firefox.instance1245;firefox.instance1248;firefox.instance1253;firefox.instance1255;firefox.instance1270;firefox.instance1271;firefox.instance1272;firefox.instance12966;firefox.instance1320;firefox.instance1342;firefox.instance1357;firefox.instance1391;firefox.instance1393;firefox.instance1481;firefox.instance1531;firefox.instance1553;firefox.instance16709;firefox.instance1704;firefox.instance1763;firefox.instance1769;firefox.instance2127;firefox.instance2268;firefox.instance2757;firefox.instance2959;firefox.instance31804;firefox.instance3248;firefox.instance3386;firefox.instance3405;firefox.instance3406;firefox.instance3408;firefox.instance3409;firefox.instance3410;firefox.instance3421;firefox.instance3422;firefox.instance3432;firefox.instance3440;firefox.instance3479;firefox.instance3541;firefox.instance3594;firefox.instance3595;firefox.instance3621;firefox.instance3674;firefox.instance3764;firefox.instance3812;firefox.instance3885;firefox.instance4000;firefox.instance4070;firefox.instance4202;firefox.instance4329;firefox.instance4471;firefox.instance4663;firefox.instance4874;firefox.instance4985;firefox.instance4989;firefox.instance51773;firefox.instance5236;firefox.instance_1_290;firefox.instance_1_47;firefox.instance_1_49;firefox.instance_1_56;firefox.instance_1_87;parole;rhythmbox;vlc"/>
+      <property name="mpris-players" type="string" value="chromium.instance14654;chromium.instance16498;chromium.instance1876;chromium.instance3516;chromium.instance3572;chromium.instance3913;chromium.instance4234;chromium.instance4342;chromium.instance4350;chromium.instance4557;chromium.instance5001;chromium.instance5299;chromium.instance5355;chromium.instance5528;firefox.instance1139;firefox.instance1158;firefox.instance1159;firefox.instance1163;firefox.instance1167;firefox.instance1171;firefox.instance1195;firefox.instance1220;firefox.instance1226;firefox.instance12281;firefox.instance12346;firefox.instance1245;firefox.instance1248;firefox.instance1253;firefox.instance1255;firefox.instance1270;firefox.instance1271;firefox.instance1272;firefox.instance12966;firefox.instance1320;firefox.instance1342;firefox.instance1357;firefox.instance1391;firefox.instance1393;firefox.instance1481;firefox.instance1531;firefox.instance1553;firefox.instance16709;firefox.instance1704;firefox.instance1763;firefox.instance1769;firefox.instance2127;firefox.instance2268;firefox.instance2757;firefox.instance2959;firefox.instance31804;firefox.instance3248;firefox.instance3386;firefox.instance3405;firefox.instance3406;firefox.instance3408;firefox.instance3409;firefox.instance3410;firefox.instance3421;firefox.instance3422;firefox.instance3432;firefox.instance3440;firefox.instance3479;firefox.instance3541;firefox.instance3594;firefox.instance3595;firefox.instance3621;firefox.instance3674;firefox.instance3764;firefox.instance3812;firefox.instance3885;firefox.instance4000;firefox.instance4070;firefox.instance4202;firefox.instance4329;firefox.instance4471;firefox.instance4663;firefox.instance4874;firefox.instance4985;firefox.instance4989;firefox.instance51773;firefox.instance5236;firefox.instance_1_100;firefox.instance_1_185;firefox.instance_1_290;firefox.instance_1_47;firefox.instance_1_48;firefox.instance_1_49;firefox.instance_1_54;firefox.instance_1_56;firefox.instance_1_57;firefox.instance_1_59;firefox.instance_1_62;firefox.instance_1_63;firefox.instance_1_65;firefox.instance_1_66;firefox.instance_1_68;firefox.instance_1_71;firefox.instance_1_84;firefox.instance_1_85;firefox.instance_1_87;firefox.instance_1_97;parole;rhythmbox;vlc"/>
       <property name="show-notifications" type="bool" value="true"/>
     </property>
     <property name="plugin-10" type="string" value="clock">
@@ -111,6 +111,8 @@
     </property>
     <property name="plugin-5" type="string" value="systray">
       <property name="known-items" type="array">
+        <value type="string" value="chrome_status_icon_1"/>
+        <value type="string" value="steam"/>
         <value type="string" value="privateinternetaccess"/>
         <value type="string" value="vlc"/>
         <value type="string" value="nm-applet"/>
@@ -120,6 +122,7 @@
       <property name="menu-is-primary" type="bool" value="true"/>
       <property name="icon-size" type="int" value="0"/>
       <property name="known-legacy-items" type="array">
+        <value type="string" value="xpad"/>
         <value type="string" value="xfce4-power-manager"/>
         <value type="string" value="thunar"/>
         <value type="string" value="networkmanager applet"/>
