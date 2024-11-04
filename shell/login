@@ -25,4 +25,4 @@ export LANG='en_US.UTF-8'
 #export LC_TIME=$LANG
 
 # Add carpalx qgmlwy to keyboard behavior.
-setxkbmap -layout us,us -variant carpalx, -option grp:ctrls_toggle,shift:both_capslock_cancel,terminate:ctrl_alt_bksp
+#setxkbmap -layout us,us -variant carpalx, -option grp:ctrls_toggle,shift:both_capslock_cancel,terminate:ctrl_alt_bksp
