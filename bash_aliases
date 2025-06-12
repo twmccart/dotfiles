@@ -33,3 +33,9 @@ function awsvnc() {
 	ssh -o StrictHostKeyChecking=no -i "~/.ssh/AWS-RSA-key1.pem" ubuntu@${address} "vncserver -depth 24 -geometry 1440x900 -localhost :1"
 	ssh -i "~/.ssh/AWS-RSA-key1.pem" -L 5901:localhost:5901 -C -N ubuntu@${address}
 }
+
+# This function should give the path necessary to rsync a file off of an AWS EC2 instance
+function rsyncpath() {
+	file="$1"
+	echo "${USER}@$(curl http://169.254.169.254/latest/meta-data/public-hostname 2>/dev/null):$(realpath ${file})"
+}
