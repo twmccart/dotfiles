@@ -8,6 +8,8 @@ ssource ~/.shell/interactive
 force_color_prompt=yes
 ssource ~/.zsh/prompt
 
+## Use GNU ls if available.
+
 ## Set zsh special functions
 
 # from https://superuser.com/a/946143

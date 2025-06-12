@@ -205,7 +205,7 @@ set keycolor yellow
 ## include "/path/to/syntax_file.nanorc"
 ##
 ## To include all existing syntax definitions, you can do:
- include "/usr/share/nano/*.nanorc"
+ include "/opt/homebrew/share/nano/*.nanorc"
 
 #include "~/.nano/syntax/shell.nanorc"
 #include "~/.nano/syntax/python.nanorc"

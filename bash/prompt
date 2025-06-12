@@ -61,7 +61,7 @@ color_my_prompt() {
     local beginningcolor=$cyanfore
     local location="\h"
     # If the user is twmccart, we don't need the username in the prompt
-    if [[ $USER == "twmccart" ]]; then
+    if [[ $USER == "twmccart" || $USER == "thomasmccarthy" ]]; then
         local beginning="@\h"
         # If the terminal is local, show time instead of host
         if [[ -z "$SSH_TTY" || "$VNCDESKTOP" =~ "$HOSTNAME" ]]; then

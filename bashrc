@@ -16,3 +16,5 @@ fi
 
 . ~/.bash/env
 . ~/.bash/interactive
+
+. "$HOME/.cargo/env"

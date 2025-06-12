@@ -13,6 +13,8 @@ alias mv='mv -i'
 alias cp='cp -i'
 alias rsync='rsync --times'
 
+# Set ls colors in BSD
+export LSCOLORS='Exgxdxdxcxegedabagacad'
 # color aliases
 alias ls='ls --color=auto'
 alias grep='grep --color=auto'
