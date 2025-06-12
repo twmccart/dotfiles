@@ -9,7 +9,7 @@ BASH_ENV=
 
 # Run ~/.bash/login
 . ~/.bash/login
-setxkbmap -layout us,us -variant carpalx, -option grp:ctrls_toggle,shift:both_capslock_cancel,terminate:ctrl_alt_bksp
+#setxkbmap -layout us,us -variant carpalx, -option grp:ctrls_toggle,shift:both_capslock_cancel,terminate:ctrl_alt_bksp
 
 # Run ~/.bash/interactive if this is an interactive shell.
 if [ "$PS1" ]; then
