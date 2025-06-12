@@ -1,10 +1,12 @@
 [user]
 	name = Thomas Wayne McCarthy
-	email = 10548984+twmccart@users.noreply.github.com
+	email = thomas.mccarthy@bd.com
 [push]
 	default = simple
 [core]
 	excludesfile = /home/twmccart/.gitignore_global
+	editor = nano -w
+	autocrlf = input
 [color]
 	diff = auto
 	status = auto
