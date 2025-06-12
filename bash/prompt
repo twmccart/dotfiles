@@ -63,12 +63,12 @@ color_my_prompt() {
     # If the user is twmccart, we don't need the username in the prompt
     if [[ $USER == "twmccart" ]]; then
         local beginning="@\h"
+    fi
         # If the terminal is local, show time instead of host
         if [[ -z "$SSH_TTY" || "$VNCDESKTOP" =~ "$HOSTNAME" ]]; then
             local beginning="\t"
             local beginningcolor=$magentafore
         fi
-    fi
     # The hostname is less than helpful on the IU HPC resources
     if [[ "$HOME" =~ "Mason" ]]; then
         local location="Mason"
