@@ -1,0 +1,2 @@
+# Set timezone to Eastern
+TZ='America/Indiana/Indianapolis'; export TZ
