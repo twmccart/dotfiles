@@ -4,9 +4,9 @@
 export EDITOR=nano
 
 # Path settings
+pathprepend /opt/homebrew/bin PATH
 pathprepend ~/.local/bin PATH
 pathprepend ~/bin PATH
-pathprepend /opt/homebrew/bin PATH
 
 # Source local path settings
 ssource ~/.path

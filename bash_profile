@@ -9,7 +9,7 @@ BASH_ENV=
 
 # Run ~/.bash/login
 . ~/.bash/login
-setxkbmap -layout us,us -variant carpalx, -option grp:ctrls_toggle,shift:both_capslock_cancel,terminate:ctrl_alt_bksp
+#setxkbmap -layout us,us -variant carpalx, -option grp:ctrls_toggle,shift:both_capslock_cancel,terminate:ctrl_alt_bksp
 
 # Run ~/.bash/interactive if this is an interactive shell.
 if [ "$PS1" ]; then
@@ -17,20 +17,33 @@ if [ "$PS1" ]; then
 fi
 
 
+. "$HOME/.cargo/env"
+
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/Users/thomasmccarthy/opt/miniconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+__conda_setup="$('/Users/thomasmccarthy/miniforge3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
-    if [ -f "/Users/thomasmccarthy/opt/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "/Users/thomasmccarthy/opt/miniconda3/etc/profile.d/conda.sh"
+    if [ -f "/Users/thomasmccarthy/miniforge3/etc/profile.d/conda.sh" ]; then
+        . "/Users/thomasmccarthy/miniforge3/etc/profile.d/conda.sh"
     else
-        export PATH="/Users/thomasmccarthy/opt/miniconda3/bin:$PATH"
+        export PATH="/Users/thomasmccarthy/miniforge3/bin:$PATH"
     fi
 fi
 unset __conda_setup
 # <<< conda initialize <<<
 
 
-. "$HOME/.cargo/env"
+# >>> mamba initialize >>>
+# !! Contents within this block are managed by 'mamba shell init' !!
+export MAMBA_EXE='/Users/thomasmccarthy/miniforge3/bin/mamba';
+export MAMBA_ROOT_PREFIX='/Users/thomasmccarthy/miniforge3';
+__mamba_setup="$("$MAMBA_EXE" shell hook --shell bash --root-prefix "$MAMBA_ROOT_PREFIX" 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__mamba_setup"
+else
+    alias mamba="$MAMBA_EXE"  # Fallback on help from mamba activate
+fi
+unset __mamba_setup
+# <<< mamba initialize <<<
