@@ -9,6 +9,14 @@ force_color_prompt=yes
 ssource ~/.zsh/prompt
 
 ## Set zsh special functions
+# Enhanced zsh features
+setopt EXTENDED_GLOB AUTO_CD AUTO_PUSHD PUSHD_IGNORE_DUPS
+setopt HIST_REDUCE_BLANKS CORRECT
+
+# Better completion
+autoload -U compinit && compinit
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
+zstyle ':completion:*' menu select
 
 # from https://superuser.com/a/946143
 set-window-title() {
