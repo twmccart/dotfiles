@@ -19,6 +19,10 @@ setopt HIST_REDUCE_BLANKS CORRECT
 autoload -U compinit && compinit
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
 zstyle ':completion:*' menu select
+# Better git completion styling
+zstyle ':completion:*:*:git:*' menu select
+zstyle ':completion:*:*:git checkout:*' menu select
+zstyle ':completion:*:*:git merge:*' menu select
 
 # from https://superuser.com/a/946143
 set-window-title() {
