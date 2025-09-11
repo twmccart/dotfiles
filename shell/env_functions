@@ -45,6 +45,7 @@ pathappend () {
     export $var="${value:+${value}:}${1}"
 }
 
+# Safe source
 # Usage: ssource filename
 ssource () {
     if [ -r "$1" ]; then
