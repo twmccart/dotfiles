@@ -12,23 +12,22 @@ fi
 
 # http://unix.stackexchange.com/a/124409/189745
 git_color() {
-	# This produces an ANSI(?) color code based on the git status of the working
-	# directory. The color codes are not \[ \] escaped.
-	local git_status
-	git_status="$(git status 2> /dev/null)"
-	if [[ "$git_status" =~ "Changes not staged for commit" ]]; then
-		printf "\e[38;5;200m" #fuchsia foreground
-	elif [[ "$git_status" =~ "Changes to be committed" ]]; then
-		printf "\e[38;5;220m" #yellow foreground
-	elif [[ "$git_status" =~ "Your branch is ahead of" ]]; then
-		printf "\e[38;5;220m" #yellow foreground
-	elif [[ "$git_status" =~ "nothing to commit" ]]; then
-		printf "\e[38;5;002m" #green foreground
-	elif [[ -z "$git_status" ]]; then
-		printf "\e[0m" #reset color
-	else
-		printf "\e[38;5;200m" #fuchsia foreground
-	fi
+    # This produces a zsh color code based on the git status
+    local git_status
+    git_status="$(git status 2> /dev/null)"
+    if [[ "$git_status" =~ "Changes not staged for commit" ]]; then
+        printf "%%F{200}" # fuchsia foreground
+    elif [[ "$git_status" =~ "Changes to be committed" ]]; then
+        printf "%%F{220}" # yellow foreground
+    elif [[ "$git_status" =~ "Your branch is ahead of" ]]; then
+        printf "%%F{220}" # yellow foreground
+    elif [[ "$git_status" =~ "nothing to commit" ]]; then
+        printf "%%F{2}" # green foreground
+    elif [[ -z "$git_status" ]]; then
+        printf "%%f" # reset color
+    else
+        printf "%%F{200}" # fuchsia foreground
+    fi
 }
 find_git_branch() {
 	# Based on: http://stackoverflow.com/a/13003854/170413
@@ -50,29 +49,46 @@ seecolors() {
 		((color++));
 	done
 }
+# Enable zsh's built-in vcs_info for git integration
+autoload -Uz vcs_info
+precmd() { vcs_info }
+
+# Configure vcs_info for git
+zstyle ':vcs_info:git:*' formats '(%b) '
+zstyle ':vcs_info:*' enable git
+
+# Enable prompt substitution
+setopt PROMPT_SUBST
+
 color_my_prompt() {
-    # Here are some colors we want, complete with \[ \] to avoid messing up character count in the prompt
-    local red="\[\e[31m\]" #Red characters
-    local bigred="\[\e[31;1m\]" #Bold red characters
-    local redfore="\[\e[38;5;009m\]"  #bright red foreground
-    local magentafore="\[\e[38;5;013m\]"
-    local cyanfore="\[\e[38;5;014m\]" # bright cyan foreground
-    local resetcolor="\[\e[0m\]"
-    # Here are some defaults for variables
+    # Zsh color definitions (no need for \[ \] escaping)
+    local red="%F{red}"
+    local cyan="%F{cyan}"
+    local magenta="%F{magenta}"
+    local green="%F{green}"
+    local yellow="%F{yellow}"
+    local bright_red="%F{9}"
+    local bright_cyan="%F{14}"
+    local bright_magenta="%F{13}"
+    local reset="%f"
+    
+    # Default values
     local bracketcolor=$red
-    local beginning="\u@\h"
-    local beginningcolor=$cyanfore
-    local location="\h"
-    # If the user is twmccart, we don't need the username in the prompt
-    if [[ $USER == "twmccart" ]]; then
-        local beginning="@\h"
+    local beginning="%n@%m"
+    local beginningcolor=$bright_cyan
+    local location="%m"
+    
+    # If the user is twmccart or thomasmccarthy, simplify the prompt
+    if [[ $USER == "twmccart" || $USER == "thomasmccarthy" ]]; then
+        local beginning="@%m"
         # If the terminal is local, show time instead of host
         if [[ -z "$SSH_TTY" || "$VNCDESKTOP" =~ "$HOSTNAME" ]]; then
-            local beginning="\t"
-            local beginningcolor=$magentafore
+            local beginning="%D{%H:%M:%S}"
+            local beginningcolor=$bright_magenta
         fi
     fi
-    # The hostname is less than helpful on the IU HPC resources
+    
+    # Handle HPC resources
     if [[ "$HOME" =~ "Mason" ]]; then
         local location="Mason"
         local beginning="${beginning}-${location}"
@@ -83,11 +99,13 @@ color_my_prompt() {
         local location="Carbonate"
         local beginning="${beginning}-${location}"
     fi
-# Terminal title bar displays Host:workingdirectorypath
-# Prompt has working directory colored by git status
-# \e is ESC code, \a is BEL code, this may not be POSIX-compliant
-    PS1="${bracketcolor}[${resetcolor}${beginningcolor}${beginning} \[\$(git_color)\]\$(find_git_branch)${resetcolor}\W${bracketcolor}]${resetcolor}\\$ "
+    
+    # Set terminal title bar
+    print -Pn "\e]0;${location}:%~\a"
+    
+    # Build the prompt with git-aware coloring
+    PS1="${bracketcolor}[${reset}${beginningcolor}${beginning} "
+    PS1+="%{\$(git_color)%}\${vcs_info_msg_0_}${reset}%1~${bracketcolor}]${reset}%# "
 }
 
-#if [[ "$TERM" =~ 256color ]]; then color_my_prompt; fi
-#color_my_prompt
+color_my_prompt
