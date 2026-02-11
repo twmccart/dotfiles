@@ -1,0 +1,111 @@
+#!/usr/bin/env zsh
+## Make the terminal prompt pretty and informative
+# Original default prompt is PS1='%~ %# '
+# Set terminal title bar to display device:workingdirectory, set red brackets.
+# \033 is ANSI ESC code, \007 is BEL.
+if [[ "$TERM" =~ "xterm" ]]; then
+	PS1='%F{red}[%f%n@%m %~%F{red}]%f%# '
+fi
+if [[ "$TERM" =~ "256color" ]]; then
+	PS1='%F{red}[%f%n@%m %~%F{red}]%f%# '
+fi
+
+# http://unix.stackexchange.com/a/124409/189745
+git_color() {
+    # This produces a zsh color code based on the git status
+    local git_status
+    git_status="$(git status 2> /dev/null)"
+    if [[ "$git_status" =~ "Changes not staged for commit" ]]; then
+        printf "%%F{200}" # fuchsia foreground
+    elif [[ "$git_status" =~ "Changes to be committed" ]]; then
+        printf "%%F{220}" # yellow foreground
+    elif [[ "$git_status" =~ "Your branch is ahead of" ]]; then
+        printf "%%F{220}" # yellow foreground
+    elif [[ "$git_status" =~ "nothing to commit" ]]; then
+        printf "%%F{2}" # green foreground
+    elif [[ -z "$git_status" ]]; then
+        printf "%%f" # reset color
+    else
+        printf "%%F{200}" # fuchsia foreground
+    fi
+}
+find_git_branch() {
+	# Based on: http://stackoverflow.com/a/13003854/170413
+	local branch
+	if branch=$(git rev-parse --abbrev-ref HEAD 2> /dev/null); then
+		if [[ "$branch" == "HEAD" ]]; then
+		branch='detached*'
+		fi
+	git_branch="($branch) "
+	else
+		git_branch=""
+	fi
+	echo -n "$git_branch"
+}
+seecolors() {
+	local color=0;
+	while [ $color -lt 256 ]; do
+		echo -e "$color: \\033[38;5;${color}mhello\\033[48;5;${color}mworld\\033[0m";
+		((color++));
+	done
+}
+# Enable zsh's built-in vcs_info for git integration
+autoload -Uz vcs_info
+precmd() { vcs_info }
+
+# Configure vcs_info for git
+zstyle ':vcs_info:git:*' formats '(%b) '
+zstyle ':vcs_info:*' enable git
+
+# Enable prompt substitution
+setopt PROMPT_SUBST
+
+color_my_prompt() {
+    # Zsh color definitions (no need for \[ \] escaping)
+    local red="%F{red}"
+    local cyan="%F{cyan}"
+    local magenta="%F{magenta}"
+    local green="%F{green}"
+    local yellow="%F{yellow}"
+    local bright_red="%F{9}"
+    local bright_cyan="%F{14}"
+    local bright_magenta="%F{13}"
+    local reset="%f"
+    
+    # Default values
+    local bracketcolor=$red
+    local beginning="%n@%m"
+    local beginningcolor=$bright_cyan
+    local location="%m"
+    
+    # If the user is twmccart or thomasmccarthy, simplify the prompt
+    if [[ $USER == "twmccart" || $USER == "thomasmccarthy" ]]; then
+        local beginning="@%m"
+        # If the terminal is local, show time instead of host
+        if [[ -z "$SSH_TTY" || "$VNCDESKTOP" =~ "$HOSTNAME" ]]; then
+            local beginning="%D{%H:%M:%S}"
+            local beginningcolor=$bright_magenta
+        fi
+    fi
+    
+    # Handle HPC resources
+    if [[ "$HOME" =~ "Mason" ]]; then
+        local location="Mason"
+        local beginning="${beginning}-${location}"
+    elif [[ "$HOME" =~ "Karst" ]]; then
+        local location="Karst"
+        local beginning="${beginning}-${location}"
+    elif [[ "$HOME" =~ "Carbonate" ]]; then
+        local location="Carbonate"
+        local beginning="${beginning}-${location}"
+    fi
+    
+    # Set terminal title bar
+    print -Pn "\e]0;${location}:%~\a"
+    
+    # Build the prompt with git-aware coloring
+    PS1="${bracketcolor}[${reset}${beginningcolor}${beginning} "
+    PS1+="%{\$(git_color)%}\${vcs_info_msg_0_}${reset}%1~${bracketcolor}]${reset}%# "
+}
+
+color_my_prompt

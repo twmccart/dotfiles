@@ -1,0 +1,53 @@
+ssource ~/.shell/interactive
+
+## Confirm that this is genuinely interactive.
+# Rsync executes bashrc even though it's not actually looking for a prompt.
+#[ -z "$PS1" ] && return
+
+## More useful prompt
+force_color_prompt=yes
+ssource ~/.zsh/prompt
+
+## Set zsh special functions
+# Enhanced zsh features
+setopt EXTENDED_GLOB AUTO_CD AUTO_PUSHD PUSHD_IGNORE_DUPS
+setopt HIST_REDUCE_BLANKS CORRECT
+
+# Better completion
+autoload -U compinit && compinit
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
+zstyle ':completion:*' menu select
+# Better git completion styling
+zstyle ':completion:*:*:git:*' menu select
+zstyle ':completion:*:*:git checkout:*' menu select
+zstyle ':completion:*:*:git merge:*' menu select
+
+# from https://superuser.com/a/946143
+set-window-title() {
+  # /Users/clessg/projects/dotfiles -> ~/p/dotfiles
+  #window_title="\e]0;${${PWD/#"$HOME"/~}/projects/p}\a"
+  # Use zsh PROMPT expansion to display hostname and directory.
+  window_title="\e]0;%m:%~\a"
+  print -nP "$window_title"
+}
+
+## Log that total shell history.
+# Based on https://www.jefftk.com/p/you-should-be-logging-shell-history
+promptFunc() {
+# Right before prompting for the next command, save the previous command in a file.
+    local exit_status="$?"
+    echo "$(date +%Y-%m-%d--%H-%M-%S) $(tty)-zsh $PWD   $(history -L -D -1 | cut -w -f 3-)    $exit_status" >> ~/.full_history
+}
+
+# Make an array of functions to be run before each command prompt.
+precmd_functions=(set-window-title promptFunc)
+
+histgrep() {
+    cat ~/.full_history | grep --color=always "$@"
+}
+clean_full_history() {
+    cp ~/.full_history ~/.full_history.backup &&
+    < ~/.full_history.backup grep -v -E -e '  cd ' -e '  cd\.*$' -e '  ls$' -e '  \.\.\.?$' -e '  scratch$' -e '  pwd$' > ~/.full_history &&
+    rm ~/.full_history.backup
+}
+

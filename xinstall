@@ -5,7 +5,7 @@ set -euo pipefail
 setup_main_dotfiles() {
 	# First set up the directories that the bash dotfiles point into.
 	echo "Setting up the bash directories."
-	for file in {bash,shell}; do
+	for file in {bash,shell,zsh}; do
 		# If the file is already there, try to back it up.
 		if [ -e ~/.${file} ]; then
 			mv -i ~/.${file} ~/.${file}.backup
@@ -20,7 +20,7 @@ setup_main_dotfiles() {
 	done
 	# Now place all the high-level dotfiles.
 	echo "Placing the high-level dotfiles."
-	for file in {bashrc,bash_profile,gitconfig,inputrc,nanorc,tmux.conf}; do
+	for file in {bashrc,bash_profile,bash_aliases,gitconfig,inputrc,nanorc,tmux.conf,zshrc,zshenv,zlogin,zlogout}; do
 		# If the file is already there, try to back it up.
 		if [ -e ~/.${file} ]; then
 			mv --no-clobber ~/.${file} ~/.${file}.backup
@@ -33,7 +33,7 @@ setup_main_dotfiles() {
 		popd
 	done
 }
-setup_main_dotfiles
+#setup_main_dotfiles
 
 # Set up custom desktop applications.
 setup_desktop_applications() {
@@ -56,7 +56,7 @@ setup_desktop_applications() {
 		fi
 	done
 }
-setup_desktop_applications
+#setup_desktop_applications
 
 ## Set up other config files.
 # Set up geany configs.
@@ -77,7 +77,7 @@ setup_geany_configs() {
 		done
 	fi
 }
-setup_geany_configs
+#setup_geany_configs
 
 # Set up rstudio configs.
 setup_rstudio_configs() {
@@ -96,4 +96,5 @@ setup_rstudio_configs() {
 		done
 	fi
 }
-setup_rstudio_configs
+#setup_rstudio_configs
+

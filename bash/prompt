@@ -61,7 +61,7 @@ color_my_prompt() {
     local beginningcolor=$cyanfore
     local location="\h"
     # If the user is twmccart, we don't need the username in the prompt
-    if [[ $USER == "twmccart" || $USER == "thomasmccarthy" ]]; then
+    if [[ $USER == "twmccart" ]]; then
         local beginning="@\h"
         # If the terminal is local, show time instead of host
         if [[ -z "$SSH_TTY" || "$VNCDESKTOP" =~ "$HOSTNAME" ]]; then
@@ -86,6 +86,5 @@ color_my_prompt() {
     PS1="\[\e]0;${location}:\w\a\]${bracketcolor}[${resetcolor}${beginningcolor}${beginning} \[\$(git_color)\]\$(find_git_branch)${resetcolor}\W${bracketcolor}]${resetcolor}\\$ "
 }
 
-# mate-terminal currently accidentally sets itself as not having 256 colors.
-export TERM=xterm-256color
-if [[ "$TERM" =~ 256color ]]; then color_my_prompt; fi
+#if [[ "$TERM" =~ 256color ]]; then color_my_prompt; fi
+color_my_prompt
