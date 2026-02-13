@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Exec=sh -c "sleep 2; setxkbmap -layout us,us -variant carpalx, -option grp:ctrls_toggle,shift:both_capslock_cancel,terminate:ctrl_alt_bksp,caps:super"
+Hidden=false
+NoDisplay=false
+X-GNOME-Autostart-enabled=true
+Name=Apply XKB Layout
