@@ -1,0 +1,8 @@
+{
+    "initial_working_directory": "/N/project/Bulk_RNA/",
+    "highlight_r_function_calls": true,
+    "rainbow_parentheses": true,
+    "pdf_previewer": "none",
+    "posix_terminal_shell": "bash",
+    "editor_theme": "Scoron"
+}
