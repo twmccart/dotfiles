@@ -98,3 +98,19 @@ setup_rstudio_configs() {
 }
 #setup_rstudio_configs
 
+# Set up use of carpalx keyboard on machines using xkb
+setup_keyboard() {
+	mkdir -p ~/.config/autostart
+	for file in {config/autostart/xkb.desktop,}; do
+		if [ -e ~/.${file} ]; then
+			mv --no-clobber ~/.${file} ~/.${file}.backup
+		fi
+		# Remove any dead symlink or non-clobbering file that might be there.
+		rm -f ~/.${file}
+		path=$(realpath ${file})
+		pushd ~
+			ln -s -T ${path} .${file}
+		popd
+	done
+}
+setup_keyboard
