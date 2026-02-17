@@ -15,4 +15,7 @@ if [ -f /etc/bashrc ]; then
 fi
 
 . ~/.bash/env
-. ~/.bash/interactive
+# Run ~/.bash/interactive if this is an interactive shell.
+if [ "$PS1" ]; then
+    . ~/.bash/interactive
+fi
