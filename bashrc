@@ -14,5 +14,11 @@ if [ -f /etc/bashrc ]; then
 	. /etc/bashrc
 fi
 
+# Source modules
+if [ -f ~/.modules ]; then
+        . ~/.modules
+fi
+
+
 . ~/.bash/env
 . ~/.bash/interactive

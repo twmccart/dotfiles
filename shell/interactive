@@ -74,8 +74,8 @@ stderred() {
 		export STDERRED_ESC_CODE=$(echo -e "\e[38;5;200m")
 		# https://githubmemory.com/repo/sickill/stderred/issues/52
 		# Prevent weirdness when starting tmux.
-		#export STDERRED_BLACKLIST='^(-bash)$'
-		export STDERRED_BLACKLIST='^(-%s)$'
+		export STDERRED_BLACKLIST='^(-bash)$'
+		#export STDERRED_BLACKLIST='^(-%s)$'
 	fi
 }
 stderred
