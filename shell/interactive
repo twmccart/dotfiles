@@ -1,6 +1,6 @@
 ## Confirm that this is genuinely interactive.
 # Rsync executes bashrc even though it's not actually looking for a prompt.
-[ -z "$PS1" ] && return
+[[ $- != *i* ]] && return
 
 ## More useful prompt
 #ssource ~/.shell/prompt
@@ -78,4 +78,7 @@ stderred() {
 		#export STDERRED_BLACKLIST='^(-%s)$'
 	fi
 }
-stderred
+# Only preload stderred in real interactive terminals
+if [[ $- == *i* ]] && [[ -n "$PS1" ]] && [[ "$TERM" != "dumb" ]]; then
+    stderred
+fi
