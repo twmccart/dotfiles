@@ -75,7 +75,8 @@ stderred() {
 		# https://githubmemory.com/repo/sickill/stderred/issues/52
 		# Prevent weirdness when starting tmux.
 		#export STDERRED_BLACKLIST='^(-bash)$'
-		export STDERRED_BLACKLIST='^(-%s)$'
+		#export STDERRED_BLACKLIST='^(-%s)$'
+		export STDERRED_BLACKLIST='^(-%s|gpg|gpg2)$'
 	fi
 }
 # Only preload stderred in real interactive terminals
