@@ -3,17 +3,6 @@
 # Preferred programs
 export EDITOR=nano
 
-# Path settings
-pathprepend ~/.local/bin PATH
-pathprepend ~/bin PATH
-
-# Source local path settings
-ssource ~/.path
-
-# The current directory should never be in $PATH
-pathremove . PATH
-pathremove "" PATH
-
 # Language
 export LANG='en_US.UTF-8'
 #export LC_ALL=$LANG

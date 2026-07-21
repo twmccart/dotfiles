@@ -10,5 +10,16 @@
 
 #umask 0077
 
+# Path settings
+pathprepend ~/.local/bin PATH
+pathprepend ~/bin PATH
+
+# Source local path settings
+ssource ~/.path
+
+# The current directory should never be in $PATH
+pathremove . PATH
+pathremove "" PATH
+
 ssource ~/.shell/env_local
 
